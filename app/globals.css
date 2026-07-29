@@ -1,0 +1,354 @@
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --ink: #1c2321;
+  --ink-muted: #6b7573;
+  --line: #e3e5e2;
+  --line-strong: #c7cbc8;
+
+  --positive: #2f6f4e;
+  --positive-bg: #eaf3ee;
+  --negative: #b0432b;
+  --negative-bg: #fbede9;
+  --warning: #a8711f;
+  --warning-bg: #faf1e3;
+
+  --radius: 3px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+  font-family: var(--font-mono), 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Visible keyboard focus everywhere — accessibility floor */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- Shell layout ---------- */
+
+.shell {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.header-title {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 2px;
+}
+
+.header-date {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+  padding: 4px 20px 96px;
+}
+
+/* ---------- Bottom nav (mobile-first, register-tab style) ---------- */
+
+.nav {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.nav-item {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 14px 0 12px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-top: 2px solid transparent;
+}
+
+.nav-item[data-active='true'] {
+  color: var(--ink);
+  border-top-color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- Ledger rows (the signature element) ---------- */
+
+.ledger {
+  border-top: 1px solid var(--line);
+}
+
+.ledger-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ledger-row-main {
+  min-width: 0;
+}
+
+.ledger-subject {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ledger-type {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.ledger-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mark-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+}
+
+.mark-btn[data-kind='attend'][data-active='true'] {
+  background: var(--positive-bg);
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.mark-btn[data-kind='skip'][data-active='true'] {
+  background: var(--negative-bg);
+  border-color: var(--negative);
+  color: var(--negative);
+}
+
+.empty-state {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
+/* ---------- Date picker ---------- */
+
+.date-input {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* ---------- Setup page: subject chips ---------- */
+
+.day-tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.day-tab {
+  flex-shrink: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.day-tab[data-active='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+  font-weight: 600;
+}
+
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.chip {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 9px 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip[data-added='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+}
+
+.chip-type {
+  font-size: 10px;
+  opacity: 0.65;
+  text-transform: uppercase;
+}
+
+/* ---------- Summary page ---------- */
+
+.section-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 28px 0 10px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+
+.summary-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.summary-frac {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.summary-percent {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 56px;
+  text-align: right;
+}
+
+.summary-percent[data-below='true'] {
+  color: var(--negative);
+}
+
+.summary-percent[data-below='false'] {
+  color: var(--positive);
+}
+
+.banner {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.banner[data-tone='negative'] {
+  background: var(--negative-bg);
+  border-color: var(--negative);
+  color: var(--negative);
+}
+
+.banner[data-tone='positive'] {
+  background: var(--positive-bg);
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.overall-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.overall-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 0 0 6px;
+}
+
+.overall-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
